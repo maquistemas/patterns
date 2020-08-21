@@ -1,0 +1,17 @@
+List<String> ObfuscateList = Arrays.asList(
+        "cdCardNumber", "card", "userName", "dsMotherSurname", "dsFatherSurname", "dsEmail", "dsFirstName",
+        "cdCompanyAddress", "dsCompany", "dsRuc", "dsCic", "dsIdc", "dsDocument", "number", "name", "alias",
+        "comercialNumber", "cic", "dsFullName", "dsShortName");
+    System.out.println(logObfuscate(json, ObfuscateList));
+}
+private static String logObfuscate(String json, List<String> obfuscateList) {
+  json = json.replaceAll("\\\\", "").replaceAll("\\d{16}", "***");
+  String pattern = "\":\\s*\"[^\"]+?([^\\/\"]+)";
+  String replace = "\":\"***";
+  for (String s : obfuscateList) {
+    String regex = s + pattern;
+    String rp = s + replace;
+    json = json.replaceAll(regex, rp);
+  }
+  return json;
+}
